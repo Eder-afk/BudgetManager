@@ -1,2 +1,12 @@
 # BudgetManager
-Budget Manager is a personal finance app that allows users to track income, expenses, and budgets across different accounts. Includes category management, reporting, and Excel export.
+
+Budget Manager is an application to manage personal finances. Users can:
+
+- Register and log in
+- Record expenses and income
+- Manage multiple pockets (credit cards, debit cards, cash, etc.)
+- Create custom expense categories (food, rent, etc.)
+- Generate reports for specific time intervals (daily, weekly, monthly)
+- Export reports in Excel format
+
+Stack: ASP.NET MVC, SQL Server, Dapper, Bootstrap, JavaScript
