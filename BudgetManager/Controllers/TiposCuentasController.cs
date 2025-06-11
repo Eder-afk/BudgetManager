@@ -1,22 +1,46 @@
 ﻿using BudgetManager.Models;
+using BudgetManager.Services;
+using Dapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 
 namespace BudgetManager.Controllers
 {
     public class TiposCuentasController: Controller
     {
+        private readonly IRepositorioTiposCuentas repositorioTiposCuentas;
+
+        public TiposCuentasController(IRepositorioTiposCuentas repositorioTiposCuentas)
+        {
+            this.repositorioTiposCuentas = repositorioTiposCuentas;
+        }
+
         public IActionResult Crear()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Crear(TipoCuenta tipoCuenta)
+        public async Task<IActionResult> Crear(TipoCuenta tipoCuenta)
         {
             if (!ModelState.IsValid)
             {
                 return View(tipoCuenta);
             }
+
+            tipoCuenta.UsuarioId = 1;
+
+            var yaExisteTipoCuenta = await repositorioTiposCuentas.Existe(tipoCuenta.Nombre, tipoCuenta.UsuarioId);
+
+            if (yaExisteTipoCuenta)
+            {
+                ModelState.AddModelError(nameof(tipoCuenta.Nombre), 
+                    $"Ya tienes un Tipo Cuenta llamado {tipoCuenta.Nombre}.");
+
+                return View(tipoCuenta);
+            }
+
+            await repositorioTiposCuentas.Crear(tipoCuenta);
 
             return View();
         }
