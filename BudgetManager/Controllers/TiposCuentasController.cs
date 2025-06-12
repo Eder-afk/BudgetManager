@@ -15,6 +15,13 @@ namespace BudgetManager.Controllers
             this.repositorioTiposCuentas = repositorioTiposCuentas;
         }
 
+        public async Task<IActionResult> Index()
+        {
+            int usuarioId = 1;
+            IEnumerable<TipoCuenta> tiposCuentas = await repositorioTiposCuentas.Obtener(usuarioId);
+            return View(tiposCuentas);
+        }
+
         public IActionResult Crear()
         {
             return View();
@@ -42,7 +49,21 @@ namespace BudgetManager.Controllers
 
             await repositorioTiposCuentas.Crear(tipoCuenta);
 
-            return View();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> VerificarExisteTipoCuenta(string nombre)
+        {
+            int usuarioId = 1;
+            bool yaExisteTipoCuenta = await repositorioTiposCuentas.Existe(nombre, usuarioId);
+
+            if (yaExisteTipoCuenta)
+            {
+                return Json($"El tipo cuenta \"{nombre}\" ya existe.");
+            }
+
+            return Json(true);
         }
     }
 }
