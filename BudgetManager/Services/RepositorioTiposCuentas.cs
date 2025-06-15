@@ -11,6 +11,7 @@ namespace BudgetManager.Services
         Task<IEnumerable<TipoCuenta>> Obtener(int usuarioId);
         Task Actualizar(TipoCuenta tipoCuenta);
         Task<TipoCuenta> ObtenerPorId(int id, int usuarioId);
+        Task Borrar(int id);
     }
 
     public class RepositorioTiposCuentas : IRepositorioTiposCuentas
@@ -72,13 +73,13 @@ namespace BudgetManager.Services
                                                                         new {id, usuarioId});
         }
 
-        public async Task Borrar(int id, int usuarioId)
+        public async Task Borrar(int id)
         {
             using var connection = new SqlConnection(connectionString);
             await connection.ExecuteAsync(@"
                                         DELETE TiposCuentas
-                                        WHERE Id=@Id AND UsuarioId=@UsuarioId", 
-                                        new {id, usuarioId});
+                                        WHERE Id=@Id", 
+                                        new {id});
         }
     }
 }

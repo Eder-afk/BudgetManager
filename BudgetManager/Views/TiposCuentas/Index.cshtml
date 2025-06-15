@@ -24,8 +24,14 @@
                     @tipoCuenta.Nombre
                 </td>
                 <td>
-                    <a class="btn btn-primary" asp-controller="TiposCuentas" asp-action="Editar" asp-route-id="@tipoCuenta.Id">Editar</a>
-                    <a class="btn btn-danger">Eliminar</a>
+                    <a class="btn btn-primary"
+                       asp-controller="TiposCuentas"
+                       asp-action="Editar"
+                       asp-route-id="@tipoCuenta.Id">Editar</a>
+                    <a class="btn btn-danger"
+                       asp-controller="TiposCuentas"
+                       asp-action="Borrar"
+                       asp-route-id="@tipoCuenta.Id">Eliminar</a>
                 </td>
             </tr>
         }
